@@ -1,0 +1,15 @@
+services:
+  server:
+    build: .
+    ports:
+      - "8080:8080"
+  db:
+    image: postgres
+    volumes:
+      - ./sql/init-db.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: docker_server
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432:5432"
